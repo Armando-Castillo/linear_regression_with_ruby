@@ -6,14 +6,24 @@ class Api::Ala::PredictionsController < ApplicationController
         y_data = [2127580.38, 1546738.88, 1860183.83, 1471997.62,
         1996467.07, 2742112.46, 3321632.14, 3392582.59, 4055801.37,
         5731173.04, 6084247.69, 6591827.96]
+
         x_data = Array.new(y_data.length) { |i| i = i+1 }
         
         #Get slope (m/b1/a)
         slope = get_slope(y_data, x_data)
         bias = get_bias(y_data, x_data, slope)
-        puts(slope, bias)
+
+        prediction_dataset = []
+        prediction_dataset = get_prediction_dataset(slope, bias, x_data)
+
+        prediction_next_month = 0
+        prediction_next_month = prediction_dataset.last
+
         render json: {
-            data: slope
+            data: {
+                prediction_array: prediction_dataset,
+                prediciont_value_for_month: prediction_next_month
+            }
         }
     end
 
@@ -75,4 +85,13 @@ class Api::Ala::PredictionsController < ApplicationController
         return bias
     end
 
+    def get_prediction_dataset(slope, bias, x_data)
+        slope_values = []
+        x_data << (x_data.last + 1)
+        for value in x_data do
+            slope_values << (slope*value) + bias
+        end
+
+        return(slope_values)
+    end
 end
