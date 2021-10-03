@@ -22,7 +22,7 @@ class Api::Ala::PredictionsController < ApplicationController
         render json: {
             data: {
                 prediction_array: prediction_dataset,
-                prediciont_value_for_month: prediction_next_month
+                prediction_next_month: prediction_next_month
             }
         }
     end
