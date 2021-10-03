@@ -18,6 +18,8 @@ class Api::Ala::PredictionsController < ApplicationController
     end
 
     def get_slope(y_data, x_data)
+        slope = 0
+
         y_data_mean = 0
         y_data_mean = y_data.inject{ |sum, i| sum + i }.to_f / y_data.size
 
@@ -34,9 +36,31 @@ class Api::Ala::PredictionsController < ApplicationController
             x_error.push << value - x_data_mean
         end
 
-        puts(y_error, x_error)
+        data_single_errors = []
+        y_error.zip(x_error).each do |y_value, x_value|
+            data_single_errors << y_value*x_value
+        end
+        
+        data_error_sum = 0
+        for value in data_single_errors do
+            data_error_sum = data_error_sum + value
+        end
 
-        return y_data_mean
+        x_standardized_errors = []
+        for value in x_error do
+            x_standardized_errors.push << value**2
+        end
+
+        x_stand_errors_sum = 0
+        for value in x_standardized_errors do
+            x_stand_errors_sum = x_stand_errors_sum + value
+        end
+
+        slope = data_error_sum/x_stand_errors_sum
+
+        puts(slope)
+
+        return slope
     end
 
     def get_bias
