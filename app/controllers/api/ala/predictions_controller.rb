@@ -10,8 +10,8 @@ class Api::Ala::PredictionsController < ApplicationController
         
         #Get slope (m/b1/a)
         slope = get_slope(y_data, x_data)
-        print(slope)
-
+        bias = get_bias(y_data, x_data, slope)
+        puts(slope, bias)
         render json: {
             data: slope
         }
@@ -58,13 +58,21 @@ class Api::Ala::PredictionsController < ApplicationController
 
         slope = data_error_sum/x_stand_errors_sum
 
-        puts(slope)
-
         return slope
     end
 
-    def get_bias
+    def get_bias(y_data, x_data, slope)
+        bias = 0
 
+        y_data_mean = 0
+        y_data_mean = y_data.inject{ |sum, i| sum + i }.to_f / y_data.size
+
+        x_data_mean = 0
+        x_data_mean = x_data.inject{ |sum, i| sum + i }.to_f / x_data.size
+
+        bias = y_data_mean - (slope*x_data_mean)
+
+        return bias
     end
 
 end
