@@ -1,5 +1,5 @@
 class Api::Ala::PredictionsController < ApplicationController
-
+    # https://www.alpharithms.com/simple-linear-regression-modeling-502111/ --> Explains linear regression model
     def get_prediction
         #y_data = params.permit(:values => [])
         #x_data = Array.new(y_data.length)
