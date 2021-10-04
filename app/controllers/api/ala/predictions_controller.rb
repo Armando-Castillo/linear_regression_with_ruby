@@ -5,9 +5,9 @@ class Api::Ala::PredictionsController < ApplicationController
         #x_data = Array.new(y_data.length)
         y_data = [2127580.38, 1546738.88, 1860183.83, 1471997.62,
         1996467.07, 2742112.46, 3321632.14, 3392582.59, 4055801.37,
-        5731173.04, 6084247.69, 6591827.96]
+        5731173.04, 6084247.69, 6591827.96] #dependent variable data hard-coded
 
-        x_data = Array.new(y_data.length) { |i| i = i+1 }
+        x_data = Array.new(y_data.length) { |i| i = i+1 } #independent variable created from y_data
         
         slope = get_slope(y_data, x_data) #Returns slope (pendiente/m)
         bias = get_bias(y_data, x_data, slope) #Return bias (tendencia/b/y_intersection)
