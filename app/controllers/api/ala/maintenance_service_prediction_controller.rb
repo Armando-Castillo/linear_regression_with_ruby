@@ -1,7 +1,8 @@
 class Api::Ala::MaintenanceServicePredictionController < ApplicationController
     
     def prediction
-        prediction = GenerateMaintenanceServicesPrediction.new(params).get_prediction
+        array_for_prediction = params
+        prediction = GenerateMaintenanceServicesPrediction.new(array_for_prediction).get_prediction
 
         if prediction
             response = {
