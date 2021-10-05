@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :ala do
-      get "/prediction", to:"predictions#get_prediction" 
+      get "maintenance_service_prediction", to:"maintenance_service_prediction#prediction" 
     end
   end
 

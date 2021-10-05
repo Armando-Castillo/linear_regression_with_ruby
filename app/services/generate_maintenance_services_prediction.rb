@@ -1,4 +1,9 @@
-class Api::Ala::PredictionsController < ApplicationController
+class GenerateMaintenanceServicesPrediction
+
+    def initialize
+        
+    end
+
     # https://www.alpharithms.com/simple-linear-regression-modeling-502111/ --> Explains linear regression model
     def get_prediction
         #y_data = params.permit(:values => [])
@@ -20,13 +25,17 @@ class Api::Ala::PredictionsController < ApplicationController
         #Returns next prediction
         prediction_next_month = prediction_dataset.last
 
-        render json: {
+        datos = {
             data: {
                 prediction_array: prediction_dataset,
                 prediction_next_month: prediction_next_month
             }
         }
+
+        return datos
     end
+
+    private
 
     def get_slope(y_data, x_data)
         slope = 0 #data_error_sum/x_stand_errors_sum
